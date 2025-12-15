@@ -1,0 +1,274 @@
+digraph G {
+  0 [label="AddressReader { input: Channel
+ID(255), outputs: [ChannelID(2
+56)], id: 185, data: Some([1, 
+2, 32, 1, 2, 16, 16, 16]) }"];
+  1 [label="AddressReader { input: Channel
+ID(257), outputs: [ChannelID(2
+58)], id: 186, data: Some([1, 
+2, 32, 1, 1, 16, 16, 16]) }"];
+  2 [label="AddressReader { input: Channel
+ID(259), outputs: [ChannelID(2
+60)], id: 187, data: Some([1, 
+2, 32, 1, 1, 16, 16, 16]) }"];
+  3 [label="Broadcast { input: ChannelID(2
+56), outputs: [ChannelID(261),
+ ChannelID(262)], id: 188, til
+e_size: Some([16, 16]) }"];
+  4 [label="RepeatStatic { input: ChannelI
+D(276), output: ChannelID(277)
+, count: 1, id: 202, tile_size
+: None }"];
+  5 [label="Bufferize { data_inputs: [Chan
+nelID(261)], token_outputs: [C
+hannelID(276)], token_requests
+: [ChannelID(277)], data_outpu
+ts: [ChannelID(278)], rank: 1,
+ size: Some(16), permute: [], 
+transpose: false, id: 201, til
+e_size: None }"];
+  6 [label="RepeatStatic { input: ChannelI
+D(279), output: ChannelID(280)
+, count: 2, id: 204, tile_size
+: None }"];
+  7 [label="Bufferize { data_inputs: [Chan
+nelID(258)], token_outputs: [C
+hannelID(279)], token_requests
+: [ChannelID(280)], data_outpu
+ts: [ChannelID(281)], rank: 2,
+ size: Some(16), permute: [], 
+transpose: false, id: 203, til
+e_size: None }"];
+  8 [label="Map { inputs: [ChannelID(278),
+ ChannelID(281)], output: Chan
+nelID(282), func: TypelessFunc
+tion { operations: [(MatmulT(V
+ariable(0, Float), Variable(1,
+ Float)), [0])], n_inputs: 2, 
+n_outputs: 1 }, id: 189, tile_
+size: Some([16, 16]) }"];
+  9 [label="Accum { inputs: [ChannelID(282
+)], output: ChannelID(263), fo
+ld: TypelessFunction { operati
+ons: [(Add(Variable(0, Float),
+ Variable(1, Float)), [0])], n
+_inputs: 2, n_outputs: 1 }, ra
+nk: 1, init: FP32(0.0), id: 20
+5, tile_size: None }"];
+  10 [label="AccumBigTile { input_in: Chann
+elID(263), input_partial_sum: 
+ChannelID(283), output_partial
+_sum: ChannelID(284), sum: Cha
+nnelID(264), fold: TypelessFun
+ction { operations: [(Add(Vari
+able(0, Float), Variable(1, Fl
+oat)), [0])], n_inputs: 2, n_o
+utputs: 1 }, rank: 3, id: 206,
+ tile_size: Some([16, 16]) }"];
+  11 [label="Bufferize { data_inputs: [Chan
+nelID(284)], token_outputs: [C
+hannelID(285)], token_requests
+: [ChannelID(285)], data_outpu
+ts: [ChannelID(283)], rank: 2,
+ size: Some(2), permute: [], t
+ranspose: false, id: 207, tile
+_size: Some([256, 16]) }"];
+  12 [label="RepeatStatic { input: ChannelI
+D(286), output: ChannelID(287)
+, count: 1, id: 209, tile_size
+: None }"];
+  13 [label="Bufferize { data_inputs: [Chan
+nelID(262)], token_outputs: [C
+hannelID(286)], token_requests
+: [ChannelID(287)], data_outpu
+ts: [ChannelID(288)], rank: 1,
+ size: Some(16), permute: [], 
+transpose: false, id: 208, til
+e_size: None }"];
+  14 [label="RepeatStatic { input: ChannelI
+D(289), output: ChannelID(290)
+, count: 2, id: 211, tile_size
+: None }"];
+  15 [label="Bufferize { data_inputs: [Chan
+nelID(260)], token_outputs: [C
+hannelID(289)], token_requests
+: [ChannelID(290)], data_outpu
+ts: [ChannelID(291)], rank: 2,
+ size: Some(16), permute: [], 
+transpose: false, id: 210, til
+e_size: None }"];
+  16 [label="Map { inputs: [ChannelID(288),
+ ChannelID(291)], output: Chan
+nelID(292), func: TypelessFunc
+tion { operations: [(MatmulT(V
+ariable(0, Float), Variable(1,
+ Float)), [0])], n_inputs: 2, 
+n_outputs: 1 }, id: 191, tile_
+size: Some([16, 16]) }"];
+  17 [label="Accum { inputs: [ChannelID(292
+)], output: ChannelID(265), fo
+ld: TypelessFunction { operati
+ons: [(Add(Variable(0, Float),
+ Variable(1, Float)), [0])], n
+_inputs: 2, n_outputs: 1 }, ra
+nk: 1, init: FP32(0.0), id: 21
+2, tile_size: None }"];
+  18 [label="AccumBigTile { input_in: Chann
+elID(265), input_partial_sum: 
+ChannelID(293), output_partial
+_sum: ChannelID(294), sum: Cha
+nnelID(266), fold: TypelessFun
+ction { operations: [(Add(Vari
+able(0, Float), Variable(1, Fl
+oat)), [0])], n_inputs: 2, n_o
+utputs: 1 }, rank: 3, id: 213,
+ tile_size: Some([16, 16]) }"];
+  19 [label="Bufferize { data_inputs: [Chan
+nelID(294)], token_outputs: [C
+hannelID(295)], token_requests
+: [ChannelID(295)], data_outpu
+ts: [ChannelID(293)], rank: 2,
+ size: Some(2), permute: [], t
+ranspose: false, id: 214, tile
+_size: Some([256, 16]) }"];
+  20 [label="Map { inputs: [ChannelID(264)]
+, output: ChannelID(267), func
+: TypelessFunction { operation
+s: [(Silu(Variable(0, Float)),
+ [0])], n_inputs: 1, n_outputs
+: 1 }, id: 193, tile_size: Som
+e([16, 16]) }"];
+  21 [label="Map { inputs: [ChannelID(267),
+ ChannelID(266)], output: Chan
+nelID(268), func: TypelessFunc
+tion { operations: [(Mul(Varia
+ble(0, Float), Variable(1, Flo
+at)), [0])], n_inputs: 2, n_ou
+tputs: 1 }, id: 194, tile_size
+: Some([16, 16]) }"];
+  22 [label="Promote { input: ChannelID(268
+), output: ChannelID(269), ran
+k: 3, id: 195, tile_size: Some
+([16, 16]) }"];
+  23 [label="AddressReader { input: Channel
+ID(271), outputs: [ChannelID(2
+72)], id: 197, data: Some([1, 
+2, 1, 32, 16, 1, 16, 16]) }"];
+  24 [label="RepeatStatic { input: ChannelI
+D(296), output: ChannelID(297)
+, count: 2, id: 216, tile_size
+: None }"];
+  25 [label="Bufferize { data_inputs: [Chan
+nelID(272)], token_outputs: [C
+hannelID(296)], token_requests
+: [ChannelID(297)], data_outpu
+ts: [ChannelID(298)], rank: 1,
+ size: Some(1), permute: [], t
+ranspose: false, id: 215, tile
+_size: None }"];
+  26 [label="RepeatStatic { input: ChannelI
+D(299), output: ChannelID(300)
+, count: 16, id: 218, tile_siz
+e: None }"];
+  27 [label="Bufferize { data_inputs: [Chan
+nelID(269)], token_outputs: [C
+hannelID(299)], token_requests
+: [ChannelID(300)], data_outpu
+ts: [ChannelID(301)], rank: 2,
+ size: Some(2), permute: [], t
+ranspose: false, id: 217, tile
+_size: None }"];
+  28 [label="Map { inputs: [ChannelID(298),
+ ChannelID(301)], output: Chan
+nelID(302), func: TypelessFunc
+tion { operations: [(MatmulT(V
+ariable(0, Float), Variable(1,
+ Float)), [0])], n_inputs: 2, 
+n_outputs: 1 }, id: 198, tile_
+size: Some([16, 16]) }"];
+  29 [label="Accum { inputs: [ChannelID(302
+)], output: ChannelID(273), fo
+ld: TypelessFunction { operati
+ons: [(Add(Variable(0, Float),
+ Variable(1, Float)), [0])], n
+_inputs: 2, n_outputs: 1 }, ra
+nk: 1, init: FP32(0.0), id: 21
+9, tile_size: None }"];
+  30 [label="AccumBigTile { input_in: Chann
+elID(273), input_partial_sum: 
+ChannelID(303), output_partial
+_sum: ChannelID(304), sum: Cha
+nnelID(274), fold: TypelessFun
+ction { operations: [(Add(Vari
+able(0, Float), Variable(1, Fl
+oat)), [0])], n_inputs: 2, n_o
+utputs: 1 }, rank: 3, id: 220,
+ tile_size: Some([16, 16]) }"];
+  31 [label="Bufferize { data_inputs: [Chan
+nelID(304)], token_outputs: [C
+hannelID(305)], token_requests
+: [ChannelID(305)], data_outpu
+ts: [ChannelID(303)], rank: 2,
+ size: Some(32), permute: [], 
+transpose: false, id: 221, til
+e_size: Some([256, 16]) }"];
+  32 [label="AddressWriter { inputs: [Chann
+elID(274)], output: ChannelID(
+275), id: 200, data: None, til
+e_size: Some([16, 16]) }"];
+  9 -> 10 [label="ChannelID(263)";]
+  15 -> 14 [label="ChannelID(289)";]
+  19 -> 19 [label="ChannelID(295)";]
+  24 -> 25 [label="ChannelID(297)";]
+  1 -> 7 [label="ChannelID(258)";]
+  13 -> 12 [label="ChannelID(286)";]
+  31 -> 30 [label="ChannelID(303)";]
+  15 -> 16 [label="ChannelID(291)";]
+  29 -> 30 [label="ChannelID(273)";]
+  21 -> 22 [label="ChannelID(268)";]
+  2 -> 15 [label="ChannelID(260)";]
+  22 -> 27 [label="ChannelID(269)";]
+  13 -> 16 [label="ChannelID(288)";]
+  27 -> 26 [label="ChannelID(299)";]
+  0 -> 3 [label="ChannelID(256)";]
+  7 -> 8 [label="ChannelID(281)";]
+  18 -> 19 [label="ChannelID(294)";]
+  3 -> 13 [label="ChannelID(262)";]
+  10 -> 11 [label="ChannelID(284)";]
+  18 -> 21 [label="ChannelID(266)";]
+  11 -> 11 [label="ChannelID(285)";]
+  12 -> 13 [label="ChannelID(287)";]
+  14 -> 15 [label="ChannelID(290)";]
+  20 -> 21 [label="ChannelID(267)";]
+  3 -> 5 [label="ChannelID(261)";]
+  23 -> 25 [label="ChannelID(272)";]
+  19 -> 18 [label="ChannelID(293)";]
+  30 -> 31 [label="ChannelID(304)";]
+  6 -> 7 [label="ChannelID(280)";]
+  11 -> 10 [label="ChannelID(283)";]
+  31 -> 31 [label="ChannelID(305)";]
+  25 -> 28 [label="ChannelID(298)";]
+  5 -> 8 [label="ChannelID(278)";]
+  30 -> 32 [label="ChannelID(274)";]
+  10 -> 20 [label="ChannelID(264)";]
+  17 -> 18 [label="ChannelID(265)";]
+  26 -> 27 [label="ChannelID(300)";]
+  7 -> 6 [label="ChannelID(279)";]
+  25 -> 24 [label="ChannelID(296)";]
+  4 -> 5 [label="ChannelID(277)";]
+  28 -> 29 [label="ChannelID(302)";]
+  5 -> 4 [label="ChannelID(276)";]
+  8 -> 9 [label="ChannelID(282)";]
+  16 -> 17 [label="ChannelID(292)";]
+  27 -> 28 [label="ChannelID(301)";]
+  33 [label="Input ChannelID(255)"];
+  33 -> 0 [label="ChannelID(255)";]
+  34 [label="Input ChannelID(257)"];
+  34 -> 1 [label="ChannelID(257)";]
+  35 [label="Input ChannelID(271)"];
+  35 -> 23 [label="ChannelID(271)";]
+  36 [label="Input ChannelID(259)"];
+  36 -> 2 [label="ChannelID(259)";]
+  37 [label="Output ChannelID(275)"];
+  32 -> 37 [label="ChannelID(275)";]
+}

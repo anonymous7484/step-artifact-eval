@@ -1,0 +1,29 @@
+[package]
+name = "hwsim"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+flamegraph = "0.6.5"
+itertools = "0.13.0"
+rand = "0.8.5"
+num = "0.4.0"
+graphviz-rust = {version = "0.6.6", optional = true}
+numpy = "0.23.0"
+pyo3 = { version = "0.23.4", features = ["extension-module"] }
+prost = "0.11"
+protobuf = "3.7.1"
+serde = {version="1.0.217", features = ["derive"]}
+serde_json = "1.0.137"
+npyz = "0.8.3"
+derive_more = "0.99.17"
+petgraph = "0.6"
+ndarray = "0.16.1"
+fastrand = "2.3.0"
+
+[features]
+default = ["dot"]
+dot = ["dep:graphviz-rust"]
+
+[build-dependencies]
+prost-build = "0.11"

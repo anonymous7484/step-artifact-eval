@@ -1,0 +1,119 @@
+digraph G {
+  0 [label="AddressReader { input: Channel
+ID(255), outputs: [ChannelID(2
+56)], id: 185, data: Some([1, 
+2, 32, 1, 32, 256]) }"];
+  1 [label="AddressReader { input: Channel
+ID(257), outputs: [ChannelID(2
+58)], id: 186, data: Some([1, 
+2, 32, 1, 16, 256]) }"];
+  2 [label="AddressReader { input: Channel
+ID(259), outputs: [ChannelID(2
+60)], id: 187, data: Some([1, 
+2, 32, 1, 16, 256]) }"];
+  3 [label="Broadcast { input: ChannelID(2
+56), outputs: [ChannelID(261),
+ ChannelID(262)], id: 188, til
+e_size: Some([32, 256]) }"];
+  4 [label="Map { inputs: [ChannelID(261),
+ ChannelID(258)], output: Chan
+nelID(263), func: TypelessFunc
+tion { operations: [(MatmulT(V
+ariable(0, Float), Variable(1,
+ Float)), [0])], n_inputs: 2, 
+n_outputs: 1 }, id: 189, tile_
+size: Some([32, 16]) }"];
+  5 [label="Accum { inputs: [ChannelID(263
+)], output: ChannelID(264), fo
+ld: TypelessFunction { operati
+ons: [(Add(Variable(0, Float),
+ Variable(1, Float)), [0])], n
+_inputs: 2, n_outputs: 1 }, ra
+nk: 1, init: FP32(0.0), id: 19
+0, tile_size: Some([32, 16]) }"];
+  6 [label="Map { inputs: [ChannelID(262),
+ ChannelID(260)], output: Chan
+nelID(265), func: TypelessFunc
+tion { operations: [(MatmulT(V
+ariable(0, Float), Variable(1,
+ Float)), [0])], n_inputs: 2, 
+n_outputs: 1 }, id: 191, tile_
+size: Some([32, 16]) }"];
+  7 [label="Accum { inputs: [ChannelID(265
+)], output: ChannelID(266), fo
+ld: TypelessFunction { operati
+ons: [(Add(Variable(0, Float),
+ Variable(1, Float)), [0])], n
+_inputs: 2, n_outputs: 1 }, ra
+nk: 1, init: FP32(0.0), id: 19
+2, tile_size: Some([32, 16]) }"];
+  8 [label="Map { inputs: [ChannelID(264)]
+, output: ChannelID(267), func
+: TypelessFunction { operation
+s: [(Silu(Variable(0, Float)),
+ [0])], n_inputs: 1, n_outputs
+: 1 }, id: 193, tile_size: Som
+e([32, 16]) }"];
+  9 [label="Map { inputs: [ChannelID(267),
+ ChannelID(266)], output: Chan
+nelID(268), func: TypelessFunc
+tion { operations: [(Mul(Varia
+ble(0, Float), Variable(1, Flo
+at)), [0])], n_inputs: 2, n_ou
+tputs: 1 }, id: 194, tile_size
+: Some([32, 16]) }"];
+  10 [label="Promote { input: ChannelID(268
+), output: ChannelID(269), ran
+k: 1, id: 195, tile_size: Some
+([32, 16]) }"];
+  11 [label="AddressReader { input: Channel
+ID(271), outputs: [ChannelID(2
+72)], id: 197, data: Some([1, 
+2, 1, 32, 256, 16]) }"];
+  12 [label="Map { inputs: [ChannelID(272),
+ ChannelID(269)], output: Chan
+nelID(273), func: TypelessFunc
+tion { operations: [(MatmulT(V
+ariable(0, Float), Variable(1,
+ Float)), [0])], n_inputs: 2, 
+n_outputs: 1 }, id: 198, tile_
+size: Some([32, 256]) }"];
+  13 [label="Accum { inputs: [ChannelID(273
+)], output: ChannelID(274), fo
+ld: TypelessFunction { operati
+ons: [(Add(Variable(0, Float),
+ Variable(1, Float)), [0])], n
+_inputs: 2, n_outputs: 1 }, ra
+nk: 1, init: FP32(0.0), id: 19
+9, tile_size: Some([32, 256]) 
+}"];
+  14 [label="AddressWriter { inputs: [Chann
+elID(274)], output: ChannelID(
+275), id: 200, data: None, til
+e_size: Some([32, 256]) }"];
+  12 -> 13 [label="ChannelID(273)";]
+  2 -> 6 [label="ChannelID(260)";]
+  3 -> 6 [label="ChannelID(262)";]
+  5 -> 8 [label="ChannelID(264)";]
+  3 -> 4 [label="ChannelID(261)";]
+  7 -> 9 [label="ChannelID(266)";]
+  13 -> 14 [label="ChannelID(274)";]
+  6 -> 7 [label="ChannelID(265)";]
+  0 -> 3 [label="ChannelID(256)";]
+  1 -> 4 [label="ChannelID(258)";]
+  9 -> 10 [label="ChannelID(268)";]
+  11 -> 12 [label="ChannelID(272)";]
+  10 -> 12 [label="ChannelID(269)";]
+  4 -> 5 [label="ChannelID(263)";]
+  8 -> 9 [label="ChannelID(267)";]
+  15 [label="Input ChannelID(255)"];
+  15 -> 0 [label="ChannelID(255)";]
+  16 [label="Input ChannelID(271)"];
+  16 -> 11 [label="ChannelID(271)";]
+  17 [label="Input ChannelID(259)"];
+  17 -> 2 [label="ChannelID(259)";]
+  18 [label="Input ChannelID(257)"];
+  18 -> 1 [label="ChannelID(257)";]
+  19 [label="Output ChannelID(275)"];
+  14 -> 19 [label="ChannelID(275)";]
+}

@@ -1,0 +1,74 @@
+\pgfplotsset{compat=1.17} % TeX Live 2021 maximum; adjust if newer
+\pgfplotstableread[col sep=comma]{dse_results.csv}\hdl
+\pgfplotstableread[col sep=comma]{step_reference.csv}\step
+
+% Number of rows in the STeP table (used for explicit xticks)
+\pgfplotstablegetrowsof{\step}
+\pgfmathtruncatemacro{\stepN}{\pgfplotsretval-1} % zero-based last index
+
+% Use row index as numeric x coordinate; labels come from the CSV column `label`
+\begin{tikzpicture}
+\footnotesize
+\definecolor{myblue}{rgb}{0.1215686,0.4666667,0.7058824}
+\definecolor{myorange}{rgb}{1.0,0.4980392,0.05490196}
+
+% Top plot (Clock Cycles)
+\begin{axis}[
+    name=plot1,
+    width=7.5cm,
+    height=3cm,
+    ymin=0, ymax=40000,
+    ylabel={Clock Cycles},
+    ylabel style={yshift=-5pt},
+    xtick={0,...,\stepN},
+    xticklabels={}, % hide labels on top plot
+    xticklabel=\empty,
+    font=\footnotesize,
+    tick label style={font=\footnotesize},
+    label style={font=\footnotesize},
+    legend style={font=\footnotesize, at={(3.2cm,1.8cm)}, anchor=center, legend columns=-1},
+    ymajorgrids=true,
+    xmajorgrids=false,
+    enlarge x limits=0.02,
+]
+% Clock Cycles data
+\addplot+[only marks, mark=+, color=myorange, thick, mark options={scale=2}]
+    table[x expr=\pgfplotstablerow, y={cycles (STeP sim)}]{\step};
+\addplot+[only marks, mark=x, color=myblue, thick, mark options={scale=2}]
+    table[x expr=\pgfplotstablerow, y={cycles (HDL)}]{\hdl};
+\legend{HDL Implementation, STeP Simulator}
+\end{axis}
+
+% Bottom plot (Off-chip Memory Traffic)
+\begin{axis}[
+    at=(plot1.below south west), anchor=north west,
+     ylabel near ticks, yticklabel pos=right,
+    yshift=.1cm,
+    width=7.5cm,
+    height=3cm,
+    ymin=0, ymax=10,
+    ylabel={\shortstack{Off-chip Memory \\ Traffic (MB)}},
+    ylabel style={yshift=3pt},
+    xlabel={\shortstack{Tile Size \\ (Batch Dimension, Hidden Dimension, MoE Intermediate Dimension)}},
+    xtick={0,...,\stepN},
+    xticklabels={{
+        {(16,256,16)}, {(16,256,32)}, {(16,256,64)}, {(16,256,128)}, {(16,256,256)},
+        {(32,256,16)}, {(32,256,32)}, {(32,256,64)}, {(32,256,128)}, {(32,256,256)},
+        {(64,256,16)}, {(64,256,32)}, {(64,256,64)}, {(64,256,128)}, {(64,256,256)}
+    }},
+    xticklabel style={rotate=45, anchor=north east},
+    font=\footnotesize,
+    tick label style={font=\footnotesize},
+    label style={font=\footnotesize},
+    yticklabel={\(\pgfmathprintnumber{\tick}\)},
+    ymajorgrids=true,
+    xmajorgrids=false,
+    enlarge x limits=0.02,
+]
+% Memory Traffic data
+\addplot+[only marks, mark=+, color=myorange, thick, mark options={scale=2}]
+    table[x expr=\pgfplotstablerow, y={off_chip_mem_traffic(MB) (STeP sim)}]{\step};
+\addplot+[only marks, mark=x, color=myblue, thick, mark options={scale=2}]
+    table[x expr=\pgfplotstablerow, y={off_chip_mem_traffic(MB) (HDL)}]{\hdl};
+\end{axis}
+\end{tikzpicture}

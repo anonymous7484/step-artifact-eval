@@ -1,0 +1,44 @@
+Frontend:
+  impl: LoadStoreTrace
+  clock_ratio: 1
+  path: ./my_memory.trace
+
+MemorySystem:
+  impl: BHDRAMSystem
+  clock_ratio: 1
+
+  DRAM:
+    impl: DDR5-VRR
+    org:
+      preset: DDR5_16Gb_x8
+      channel: 1
+      rank: 2
+    timing:
+      preset: DDR5_3200AN 
+    RFM:
+      BRC: 2
+
+  BHDRAMController:
+    impl: BHDRAMController
+    BHScheduler:
+      impl: BLISS
+    RefreshManager:
+      impl: AllBank
+    RowPolicy:
+      impl: ClosedRowPolicy
+      cap: 4
+    plugins:
+    - ControllerPlugin:
+        blacklist_thresh: 4
+        unblacklist_cycles: 10000
+        impl: BLISS
+    - ControllerPlugin:
+        rfm_thresh: 80
+        impl: RFMManager
+    - ControllerPlugin:
+        bf_ctr_thresh: 1024
+        bf_num_rh: 4096
+        impl: BlockHammer
+
+  AddrMapper:
+    impl: RoBaRaCoCh_with_rit 
