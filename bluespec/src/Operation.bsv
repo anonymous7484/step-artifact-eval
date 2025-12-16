@@ -328,7 +328,7 @@ module mkTileWriter#(Bit#(8) port_id, RamulatorArbiterIO arbiter) (Operation_IFC
         Tile tile = tpl_1(msg.Tag_Data).Tag_Tile;
         writer.writeNext(tile);
 
-        if (tpl_2(msg.Tag_Data) == 5) begin // Hardcoded for Gina's application.
+        if (tpl_2(msg.Tag_Data) == 5) begin // set for the application.
             $display("Finished at cycle %d", cycle_count);
             $finish;
         end
@@ -345,7 +345,7 @@ module mkPrinter#(String name) (Operation_IFC);
         
         $display("[cycle %d] %s: %s", cc, name, fshow(cur));
 
-        if (tpl_2(cur.Tag_Data) == 5) begin // Hardcoded for Gina's application.
+        if (tpl_2(cur.Tag_Data) == 5) begin // set for the application.
             $display("Finished at cycle %d", cc);
             $finish;
         end
